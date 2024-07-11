@@ -22,5 +22,6 @@
 現在のレベルの隣に、そのままの計算式でレベルアップした場合のレベルを表示する。
 
 ### 必要経験値と50レベル以上の表示方法のカスタム
-<img src="./images/text_custom.png" alt="text_custom" title="text_custom">
+<img src="./images/text_custom1.png" alt="text_custom" title="text_custom">
+<img src="./images/text_custom2.png" alt="text_custom" title="text_custom">
 必要経験値と50レベル以上の表示方法は、ある程度自由に書き換えられる。
