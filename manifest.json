@@ -1,0 +1,19 @@
+{
+  "name": "Status custom for MCQ",
+  "description": "MCQ のステータスを加工し、メーターや必要経験値を表示させます。",
+  "version": "1.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://milkchoko.sakura.ne.jp/quest/*"
+      ],
+      "js": [
+        "script.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "activeTab"
+  ]
+}
