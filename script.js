@@ -1,7 +1,29 @@
 ////////////////////////////////////////////////////////////////////
-//################################################################//
-//######## 以下の書き換えはバグが起こる可能性があります。########//
-//################################################################//
+// 
+// EXtext_before は追加レベルの数値の前に入る文字
+// EXtext_after は追加レベルの数値の後に入る文字
+// 
+// EXtext_exp_before は必要経験値の数値の前に入る文字
+// EXtext_exp_after は必要経験値の数値の後に入る文字
+// 
+// EXtext_exp2_before は必要経験値の数値の前に入る文字
+// EXtext_exp2_after は必要経験値の数値の後に入る文字
+// 
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+const EXtext_before = "＋";
+const EXtext_after = "";
+
+const EXtext_exp_before = " あと";
+const EXtext_exp_after = "";
+
+const EXtext_exp2_before = " あと";
+const EXtext_exp2_after = "";
+
+////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 const d = getNodesByXPath("/html/frameset/frame[2]")[0];
 
@@ -9,18 +31,11 @@ d.addEventListener("load", levelCustom);
 d.addEventListener("load", levelCustom2);
 d.addEventListener("load", addMeter);
 ////////////////////////////////////////////////////////////////////
-const isIncludes = (arr,target)=>arr.some(el=>target.innerHTML.includes(el));
+const isIncludes = (arr, target) => arr.some(el => target.innerHTML.includes(el));
 ////////////////////////////////////////////////////////////////////
 function levelCustom() {
   const b4 = getDocument().body;
   if (isIncludes(["商品情報", "預かり所"], b4)) {
-    return;
-  }
-  if (getData("EXP") === undefined) {
-    return;
-  }
-  console.log(`ステータス画面で、50レベル以上の表示 : ${StatusOverLevelDispley}`);
-  if (StatusOverLevelDispley === "無効") {
     return;
   }
 
@@ -33,7 +48,6 @@ function levelCustom() {
     raplaceInnerHTML(b4, getData("レベル"), newText);
   }
   const newText2 = getData("EXP") + EXtext_exp_before + next_exp + EXtext_exp_after;
-
   raplaceInnerHTML(b4, getData("EXP"), newText2);
 
   return;
@@ -47,10 +61,6 @@ function levelCustom2() {
 
   const list = d.getElementsByClassName("maintables");
   if (!list[0]?.innerHTML.includes("EXP")) {
-    return;
-  }
-  console.log(`ランキングで、50レベル以上の表示 : ${RankingOverLevelDispley}`);
-  if (RankingOverLevelDispley === "無効") {
     return;
   }
 
@@ -71,150 +81,61 @@ function addMeter() {
   if (isIncludes(["商品情報", "預かり所"], d)) {
     return;
   }
-  if (getData("HP") === undefined) {
-    return;
-  }
 
-  const old = `${getData("HP")}<br>${getData("MP")}<br>`;
   const newText = `<table style="border-spacing: 0;">
     <tbody>
       <tr>
-        <td>${coloredData("HP")}</td>
+        <td>${getData("HP")}</td>
         <td>${createMeter(getRate("HP"))}</td>
-        <td style="text-align: right;">${getRate("HP")}%</td>
+        <td style="text-align: right;">${getRate100("HP")}%</td>
       </tr>
       <tr>
         <td>${getData("MP")}</td>
         <td>${createMeter(getRate("MP"))}</td>
-        <td style="text-align: right;">${getRate("MP")}%</td>
+        <td style="text-align: right;">${getRate100("MP")}%</td>
       </tr>
     </tbody>
   </table>`;
-  console.log(`HPとMPのメーターの表示 : ${HP_MP_meterDisplay}`);
-  if (HP_MP_meterDisplay === "有効") {
-    raplaceInnerHTML(getDocument().body, old, newText);
-  }
 
-  const old2 = `<img src="./img/atk.png" width="16px" height="16px">${getData("武器")}<br><img src="./img/def.png" width="16px" height="16px">${getData("防具")}<br>`;
-  const newTable = `<table style="border-spacing: 0;">
-  <tbody>
-    <tr>
-      <td><img src="./img/atk.png" width="16px" height="16px">${getData("武器")}</td>
-      <td>${createMeter(getRate("武器"))}</td>
-      <td style="text-align: right;">${getRate("武器")}%</td>
-    </tr>
-    <tr>
-      <td><img src="./img/def.png" width="16px" height="16px">${coloredData("防具")}</td>
-      <td>${createMeter(getRate("防具"))}</td>
-      <td style="text-align: right;">${getRate("防具")}%</td>
-    </tr>
-  </tbody>
-</table>`;
-  console.log(`武器と防具の耐久値のメーターの表示 : ${Weapon_Armer_meterDisplay}`);
-  if (Weapon_Armer_meterDisplay === "有効") {
-    raplaceInnerHTML(getDocument().body, old2, newTable);
-  }
-
-  // const old3 = getData("HP");
-  // const old4 = getData("MP");
-  // const newItemText = coloredData("HP");
-  // const newItemText = coloredData("MP");
-  console.log(`HPとMPのアラート用の色変更 : ${HP_MP_Alart}`);
-  if (HP_MP_Alart === "有効") {
-    raplaceInnerHTML(getDocument().body, getData("HP"), coloredData("HP"));
-    raplaceInnerHTML(getDocument().body, getData("MP"), coloredData("MP"));
-  }
-
-  // const old5 = getData("武器");
-  // const old6 = getData("防具");
-  // const newItemText = coloredData("武器");
-  // const newItemText = coloredData("防具");
-  console.log(`耐久値アラート用の色変更 : ${Weapon_Armer_Alart}`);
-  if (Weapon_Armer_Alart === "有効") {
-    raplaceInnerHTML(getDocument().body, getData("武器"), coloredData("武器"));
-    raplaceInnerHTML(getDocument().body, getData("防具"), coloredData("防具"));
-  }
-
-  // const old7 = getData("アイテム");
-  // const newItemText = `アイテム${coloredData("アイテム")}`;
-  console.log(`アイテム数アラート用の色変更 : ${ItemAlart}`);
-  if (ItemAlart === "有効") {
-    raplaceInnerHTML(getDocument().body, getData("アイテム"), coloredData("アイテム"));
-  }
+  const old = `${getData("HP")}<br>${getData("MP")}<br>`;
+  raplaceInnerHTML(getDocument().body, old, newText);
 
   return;
 }
-// <table style="border-spacing: 0;">
+// <table>
 //   <tbody>
 //     <tr>
 //       <td>HP：186/205</td>
 //       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//         <meter value="1" low="0.20000001" high="0.500000001" optimum="1"></meter>
 //       </td>
-//       <td>90%</td>
 //     </tr>
 //     <tr>
 //       <td>MP：72/72</td>
 //       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//         <meter value="1" low="0.20000001" high="0.500000001" optimum="1"></meter>
 //       </td>
-//       <td>100%</td>
-//     </tr>
-//   </tbody>
-// </table>
-
-// <table style="border-spacing: 0;">
-//   <tbody>
-//     <tr>
-//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
-//       <td>
-//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">36%</td>
-//     </tr>
-//     <tr>
-//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
-//       <td>
-//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">31%</td>
 //     </tr>
 //   </tbody>
 // </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
-  const getReg = (key)=>{
+  const getReg = (key) => {
     switch (key) {
-    case "ヒーロー":
-      return /ヒーロー：.+/;
-    case "レベル":
-      return /レベル：\d{1,}/;
-    case "EXP":
-      return /EXP：\d{1,}/;
-    case "G":
-      return /G：\d{1,}/;
-    case "HP":
-      return /HP：\d{1,}\/\d{1,}/;
-    case "MP":
-      return /MP：\d{1,}\/\d{1,}/;
-    case "武器":
-      return /武器：.+\(\d{1,}\/\d{1,}\)/;
-    case "防具":
-      return /防具：.+\(\d{1,}\/\d{1,}\)/;
-    case "アイテム":
-      return /アイテム（\d{1,}\/\d{1,}）/;
-    case "HP括弧":
-      return /(?<=HP：)\d{1,}\/\d{1,}/;
-    case "MP括弧":
-      return /(?<=MP：)\d{1,}\/\d{1,}/;
-    case "武器括弧":
-      return /(?<=武器：.+)\(.+\)/;
-    case "防具括弧":
-      return /(?<=防具：.+)\(.+\)/;
-    case "アイテム括弧":
-      return /(?<=アイテム)（\d{1,}\/\d{1,}）/;
-    default:
-      return "";
+      case "ヒーロー":
+        return /ヒーロー：.+/;
+      case "レベル":
+        return /レベル：\d{1,}/;
+      case "EXP":
+        return /EXP：\d{1,}/;
+      case "G":
+        return /G：\d{1,}/;
+      case "HP":
+        return /HP：\d{1,}\/\d{1,}/;
+      case "MP":
+        return /MP：\d{1,}\/\d{1,}/;
+      default:
+        return "";
     }
   };
 
@@ -222,52 +143,32 @@ function getData(key) {
 }
 ////////////////////////////////////////////////////////////////////
 function getValue(key) {
-  const getReg = (key)=>{
+  const getReg = (key) => {
     switch (key) {
-    case "ヒーロー":
-      return /(?<=ヒーロー：).+/;
-    case "レベル":
-      return /(?<=レベル：)\d{1,}/;
-    case "あと":
-      return /(?<=あと)\d{1,}/;
-    case "EXP":
-      return /(?<=EXP：)\d{1,}/;
-    case "G":
-      return /(?<=G：)\d{1,}/;
-    case "now_HP":
-      return /(?<=HP：)\d{1,}(?=\/\d{1,})/;
-    case "max_HP":
-      return /(?<=HP：\d{1,}\/)\d{1,}/;
-    case "now_MP":
-      return /(?<=MP：)\d{1,}(?=\/\d{1,})/;
-    case "max_MP":
-      return /(?<=MP：\d{1,}\/)\d{1,}/;
-    case "状態":
-      return /(?<=状態：- ).+(?= -)/;
-    case "次の回復まで":
-      return /(?<=次の回復まで)\d{1,}(?=分)/;
-    // case "武器":
-    //   return /(?<=武器：).+/;
-    // case "防具":
-    //   return /(?<=防具：).+/;
-    case "武器名":
-      return /(?<=武器：).+(?=\+?\(\d{1,})/;
-    case "防具名":
-      return /(?<=防具：).+(?=\+?\(\d{1,})/;
-    case "武器能力":
-      return /(?<=武器：.+\()\d{1,}(?=\/\d{1,}\))/;
-    case "防具能力":
-      return /(?<=防具：.+\()\d{1,}(?=\/\d{1,}\))/;
-    case "武器耐久":
-      return /(?<=武器：.+\(\d{1,}\/)\d{1,}(?=\))/;
-    case "防具耐久":
-      return /(?<=防具：.+\(\d{1,}\/)\d{1,}(?=\))/;
-    case "アイテム数":
-      return /(?<=アイテム（)\d{1,}(?=\/\d{1,}）)/;
-    case "アイテム数上限":
-      return /(?<=アイテム（\d{1,}\/)\d{1,}(?=）)/;
-    default:
-      return "";
+      case "ヒーロー":
+        return /(?<=ヒーロー：).+/;
+      case "レベル":
+        return /(?<=レベル：)\d{1,}/;
+      case "あと":
+        return /(?<=あと)\d{1,}/;
+      case "EXP":
+        return /(?<=EXP：)\d{1,}/;
+      case "G":
+        return /(?<=G：)\d{1,}/;
+      case "now_HP":
+        return /(?<=HP：)\d{1,}(?=\/\d{1,})/;
+      case "max_HP":
+        return /(?<=HP：\d{1,}\/)\d{1,}/;
+      case "now_MP":
+        return /(?<=MP：)\d{1,}(?=\/\d{1,})/;
+      case "max_MP":
+        return /(?<=MP：\d{1,}\/)\d{1,}/;
+      case "状態":
+        return /(?<=状態：- ).+(?= -)/;
+      case "次の回復まで":
+        return /(?<=次の回復まで)\d{1,}(?=分)/;
+      default:
+        return "";
     }
   };
 
@@ -275,24 +176,24 @@ function getValue(key) {
 }
 ////////////////////////////////////////////////////////////////////
 function getMaintablesValue(target, key) {
-  const getReg = (key)=>{
+  const getReg = (key) => {
     switch (key) {
-    case "ヒーロー":
-      return /(?<=<small>\().+?(?=\)<\/small>)/;
-    case "レベル":
-      return /(?<=LV )\d{1,}(?=／)/;
-    case "EXP":
-      return /(?<=EXP:)\d{1,}/;
-    case "G":
-      return /(?<=G:)\d{1,}/;
-    case "HP":
-      return /(?<=HP )\d{1,}(?=／)/;
-    case "MP":
-      return /(?<=／MP )\d{1,}/;
-    case "状態":
-      return /(?<=状態：- ).+(?= -)/;
-    default:
-      return "";
+      case "ヒーロー":
+        return /(?<=<small>\().+?(?=\)<\/small>)/;
+      case "レベル":
+        return /(?<=LV )\d{1,}(?=／)/;
+      case "EXP":
+        return /(?<=EXP:)\d{1,}/;
+      case "G":
+        return /(?<=G:)\d{1,}/;
+      case "HP":
+        return /(?<=HP )\d{1,}(?=／)/;
+      case "MP":
+        return /(?<=／MP )\d{1,}/;
+      case "状態":
+        return /(?<=状態：- ).+(?= -)/;
+      default:
+        return "";
     }
   };
 
@@ -300,50 +201,15 @@ function getMaintablesValue(target, key) {
 }
 ////////////////////////////////////////////////////////////////////
 function getRate(key) {
-  let r;
-  switch (key) {
-    case "武器":
-    case "防具":
-      r = (getValue(`${key}耐久`) / 2).toString().split(".")[0];
-      // return (getValue(`${key}耐久`) / 2).toString().split(".")[0];
-      break;
-    case "HP":
-    case "MP":
-      r = (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
-      // return (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
-      break;
-  }
-  return r == 0 ? 1 : r;
+  return getValue(`now_${key}`) / getValue(`max_${key}`);
 }
 ////////////////////////////////////////////////////////////////////
-function coloredData(key) {
-  const target = getData(`${key}括弧`);
-  if (key === "アイテム") {
-    switch (getValue("アイテム数上限") - getValue("アイテム数")) {
-      case 0:
-        return `アイテム${setColor(target, "red")}`;
-      case 1:
-        return `アイテム${setColor(target, "yellow")}`;
-      default:
-        return `アイテム${target}`;
-    }
-  }
-  const rate = getRate(key);
-  let d = getData(key);
-  if (rate  < 21) {
-    return `${d.replace(target, "")}${setColor(target, "red")}`;
-  }else if (rate < 51) {
-    return `${d.replace(target, "")}${setColor(target, "yellow")}`;
-  }
-  return d;
-}
-////////////////////////////////////////////////////////////////////
-function setColor(target, color) {
-  return `<span style="color: ${color};">${target}</span>`;
+function getRate100(key) {
+  return (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
 }
 ////////////////////////////////////////////////////////////////////
 function createMeter(value) {
-  return `<meter value="${value / 100}" low="0.21" high="0.51" optimum="1" style="margin-left: .5em;"></meter>`;
+  return `<meter value="${value}" low="0.20000001" high="0.500000001" optimum="1" style="margin-left: .5em;"></meter>`;
 }
 ////////////////////////////////////////////////////////////////////
 function raplaceInnerHTML(target, oldTxt, newTxt) {
