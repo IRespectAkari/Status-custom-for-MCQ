@@ -1,4 +1,4 @@
-# Status_custom_for_MCQ v1.0
+# Status_custom_for_MCQ v2.0
 ### ミルクチョコクエストの利便性を向上させる拡張機能
 前身の「EXP custom for MCQ」から必要経験値表示などを受け継ぎつつ、新機能を追加！  
 今後の更新のための整備も実施！
