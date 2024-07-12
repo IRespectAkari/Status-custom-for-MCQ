@@ -28,3 +28,7 @@
 <img src="./images/text_custom2.png" alt="text_custom" title="text_custom">
 </div>
 必要経験値と50レベル以上の表示方法は、ある程度自由に書き換えられる。
+
+### HP、MPの％表示とメーターの表示
+<img src="./images/hpmpPercentAndMeter.png" alt="hpmpPercentAndMeter" title="hpmpPercentAndMeter">
+現在のHPとMPの隣に、それぞれの％表示とメーターを表示する。
