@@ -18,7 +18,8 @@
 その他
 - ランキング画面に次のレベルに上がる為に必要な経験値を表示。
 - 上記の必要経験値とレベルの表示方法をカスタム可能。
-- 以上の設定のオン・オフを設定ファイルに分けているため、書き換えやすい。
+
+以上の設定のオン・オフを設定ファイルで書き換えて設定可能。
 
 ### 50レベル超のレベル表示、必要経験値、HPとMPの％表記、HPとMPのメーター の追加
 <img src="./images/hpmpPercentAndMeter.png" alt="hpmpPercentAndMeter" title="hpmpPercentAndMeter">
