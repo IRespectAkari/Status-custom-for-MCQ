@@ -27,10 +27,10 @@
 <img src="./images/hpmpDurablePercentAndMeter1.png" alt="hpmpDurablePercentAndMeter1" title="hpmpDurablePercentAndMeter1">
 <img src="./images/hpmpDurablePercentAndMeter2.png" alt="hpmpDurablePercentAndMeter2" title="hpmpDurablePercentAndMeter2">
 </div>
-現在のHP・MP・耐久値の隣に、それぞれの％表記とメーターを追加する。
-現在のHP・MP・耐久値が50％、20％を切った時に色を変更する。
-経験値の隣に、次のレベルに上がるのに必要経験値を追加する。
-レベルの隣に、同じ計算式でレベルアップした場合のレベルから50を引いた値を追加。
+現在のHP・MP・耐久値の隣に、それぞれの％表記とメーターを追加する。  
+現在のHP・MP・耐久値が50％、20％を切った時に色を変更する。  
+経験値の隣に、次のレベルに上がるのに必要経験値を追加する。  
+レベルの隣に、同じ計算式でレベルアップした場合のレベルから50を引いた値を追加。  
 
 ### 必要経験値の表示（ランキング）
 <img src="./images/need_exp_ranking.png" alt="need_exp_ranking" title="need_exp_ranking">
@@ -42,3 +42,7 @@
 <img src="./images/text_custom2.png" alt="text_custom" title="text_custom">
 </div>
 必要経験値と50レベル以上の表示方法は、ある程度自由に書き換えられる。
+
+### 設定ファイルでオン・オフを変更できる。
+<img src="./images/option.png" alt="option" title="option">
+「有効」と書くとオンに、「有効」以外が書かれている場合はオフになります。
