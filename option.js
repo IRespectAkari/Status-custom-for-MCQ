@@ -4,10 +4,10 @@ const debugMode = "無効";
 //##############################################################//
 
 // ランキングで、50レベル以上を表示するかどうか
-const RankingOverLevelDispley = "無効";
+const RankingOverLevelDispley = "有効";
 
 // ステータス画面で、50レベル以上を表示するかどうか
-const StatusOverLevelDispley = "無効";
+const StatusOverLevelDispley = "有効";
 
 // 次のレベルまでに必要な経験値を表示するかどうか
 const nextLevelExpDisplay = "有効";
@@ -26,6 +26,9 @@ const Weapon_Armer_Alart = "有効";
 
 // アイテム数アラート用の色変更をするかどうか
 const ItemAlart = "有効";
+
+// 周年記念日までのカウントダウンを表示するかどうか
+const anniversaryCountdownDisplay = "有効";
 
 //##############################################################//
 

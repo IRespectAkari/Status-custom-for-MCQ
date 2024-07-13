@@ -8,34 +8,103 @@ const d = getNodesByXPath("/html/frameset/frame[2]")[0];
 d.addEventListener("load", levelCustom);
 d.addEventListener("load", rankingLevelCustom);
 d.addEventListener("load", addMeter);
+d.addEventListener("load", anniversary);
 d.addEventListener("load", debugDisplay);
 ////////////////////////////////////////////////////////////////////
 function debugDisplay() {
   console.log(`debugMode : ${debugMode}`);
-  if (debugMode === "有効") {
-    const debugText1 = [
-      `+--------------------------------------+`,
-      `| ランキングで、Lv.50以上の表示 : ${RankingOverLevelDispley} |`,
-      `| ステ画面で、Lv.50以上の表示   : ${StatusOverLevelDispley} |`,
-      `| ステ画面で、必要経験値を表示  : ${nextLevelExpDisplay} |`,
-      `| HPとMPのメーター表示          : ${HP_MP_meterDisplay} |`,
-      `| HPとMPのアラート用の色変更    : ${HP_MP_Alart} |`,
-      `| 装備の耐久値のメーター表示    : ${Weapon_Armer_meterDisplay} |`,
-      `| 耐久値アラート用の色変更      : ${Weapon_Armer_Alart} |`,
-      `| アイテム数アラート用の色変更  : ${ItemAlart} |`,
-      `+--------------------------------------+`
-    ].join("\n");
-    const debugText2 = [
-      `必要経験値表示例(ランキング) : EXP:44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
-      `必要経験値表示例(ステータス) : EXP：44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
-      `超過レベル表示例(ステータス) : レベル：50${EXtext_before}15${EXtext_after}`,
-    ].join("\n");
-    console.log(debugText1);
-    console.log(debugText2);
+  if (debugMode === "無効") {
+    return;
   }
+  const debugText0 = [
+    `+----------------------------+`,
+    `| Status custom for MCQ v2.3 |`,
+    `| update date : 2024/6/6     |`,
+    `|             made by canaya |`,
+    `+----------------------------+`,
+  ].join("\n");
+  const debugText1 = [
+    `+--------------------------------------+`,
+    `| ランキングで、Lv.50以上の表示 : ${RankingOverLevelDispley} |`,
+    `| ステ画面で、Lv.50以上の表示   : ${StatusOverLevelDispley} |`,
+    `| ステ画面で、必要経験値を表示  : ${nextLevelExpDisplay} |`,
+    `| HPとMPのメーター表示          : ${HP_MP_meterDisplay} |`,
+    `| HPとMPのアラート用の色変更    : ${HP_MP_Alart} |`,
+    `| 耐久値のメーター表示          : ${Weapon_Armer_meterDisplay} |`,
+    `| 耐久値のアラート用の色変更    : ${Weapon_Armer_Alart} |`,
+    `| アイテム数アラート用の色変更  : ${ItemAlart} |`,
+    `| 周年記念日カウントダウン表示  : ${anniversaryCountdownDisplay} |`,
+    `+--------------------------------------+`
+  ].join("\n");
+  const debugText2 = [
+    `必要経験値表示例(ランキング) : EXP:44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
+    `必要経験値表示例(ステータス) : EXP：44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
+    `超過レベル表示例(ステータス) : レベル：50${EXtext_before}15${EXtext_after}`,
+  ].join("\n");
+  console.log(debugText0);
+  console.log(debugText1);
+  console.log(debugText2);
+
+  return;
 }
 ////////////////////////////////////////////////////////////////////
 const isIncludes = (arr,target)=>arr.some(el=>target.innerHTML.includes(el));
+////////////////////////////////////////////////////////////////////
+function anniversary() {
+  if (anniversaryCountdownDisplay !== "有効") {
+    return;
+  }
+  if (isIncludes(["商品情報"], getDocument().body)) {
+    return;
+  }
+  if (!isIncludes(["ミルクタウン", "イエローテンプル", "レッドマウンテン", "ブラックパレス", "ブルーオーシャン"], getDocument().body)) {
+    return;
+  }
+
+  // h2要素（タウン名）を取得
+  const h2 = getDocument().querySelector("h2");
+  const styleTag = document.createElement("style");
+  const styleTag2 = document.createElement("style");
+  const styleHTML = [
+    `div.contents > h2::after {`,
+    `  position: absolute;`,
+    `  left: 155px;`,
+    `  width: 300px;`,
+    `  color: black;`,
+    `}`,
+  ].join("\n");
+  styleTag.innerHTML = styleHTML;
+  // h2要素に、生成した擬似要素をくっつける
+  h2.appendChild(styleTag);
+  h2.appendChild(styleTag2);
+  window.setInterval(delayTimeDisplay, 200);
+
+  function delayTimeDisplay() {
+    const thisYear = new Date().getFullYear();
+    const thisYearAnniv = new Date(`${thisYear}-6-16`)
+    const nextYearAnniv = new Date(`${thisYear + 1}-6-16`)
+    const yyyy = thisYearAnniv > new Date() ? thisYear : thisYear + 1;
+    const anniversaryTimes = yyyy - 2023;
+    const delay = new Date(`${yyyy}-6-16`) - new Date();
+  
+    // 目標時刻と現時刻の差から残り時間を計算
+    let leftDay = Math.floor(delay / 86400000);
+    let leftHou = Math.floor((delay % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let leftMin = Math.floor((delay % (1000 * 60 * 60)) / (1000 * 60));
+    let leftSec = Math.floor((delay % (1000 * 60)) / 1000);
+
+    const contentText = `${anniversaryTimes}周年記念日まで、あと${leftDay}日${leftHou}時間${leftMin}分${leftSec}秒`;
+
+    // 擬似要素の生成
+    const styleHTML2 = [
+      `div.contents > h2::after {`,
+      `  content: "${contentText}";`,
+      `}`,
+    ].join("\n");
+    styleTag2.innerHTML = styleHTML2;
+  }
+  return;
+}
 ////////////////////////////////////////////////////////////////////
 function levelCustom() {
   const b4 = getDocument().body;
@@ -76,7 +145,7 @@ function rankingLevelCustom() {
   if (!list[0]?.innerHTML.includes("EXP")) {
     return;
   }
-  if (RankingOverLevelDispley !== "有効") {
+  if (RankingOverLevelDispley === "無効") {
     return;
   }
 
@@ -155,6 +224,43 @@ function addMeter() {
 
   return;
 }
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td>HP：186/205</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>90%</td>
+//     </tr>
+//     <tr>
+//       <td>MP：72/72</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>100%</td>
+//     </tr>
+//   </tbody>
+// </table>
+
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
+//       <td>
+//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">36%</td>
+//     </tr>
+//     <tr>
+//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
+//       <td>
+//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">31%</td>
+//     </tr>
+//   </tbody>
+// </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
   const getReg = (key)=>{
@@ -177,6 +283,8 @@ function getData(key) {
       return /防具：.+\(\d{1,}\/\d{1,}\)/;
     case "アイテム":
       return /アイテム（\d{1,}\/\d{1,}）/;
+    case "アイテム一覧":
+      return /(?<=アイテム.+\n).+/;
     case "HP括弧":
       return /(?<=HP：)\d{1,}\/\d{1,}/;
     case "MP括弧":
@@ -187,6 +295,14 @@ function getData(key) {
       return /(?<=防具：.+)\(.+\)/;
     case "アイテム括弧":
       return /(?<=アイテム)（\d{1,}\/\d{1,}）/;
+    case "依頼内容":
+      return /(?<=依頼内容:).+(?=\n)/;
+    case "目的地":
+      return /(?<=目的地:).+(?=\n)/;
+    case "所要時間":
+      return /(?<=所要時間:).+(?=\n)/;
+    case "パーティー人数":
+      return /(?<=パーティー人数:).+(?=\n)/;
     default:
       return "";
     }
@@ -240,6 +356,10 @@ function getValue(key) {
       return /(?<=アイテム（)\d{1,}(?=\/\d{1,}）)/;
     case "アイテム数上限":
       return /(?<=アイテム（\d{1,}\/)\d{1,}(?=）)/;
+    case "所要時間":
+      return /(?<=所要時間:).+(?=時間)/;
+    case "パーティー人数":
+      return /(?<=パーティー人数:).+(?=人)/;
     default:
       return "";
     }
@@ -352,7 +472,7 @@ function getNodesByXPath(xpath) {
 // フレーム内documentを取得して返す
 ////////////////////////////////////////////////////////////////////
 function getDocument() {
-  const doc = window.document.getElementsByTagName("frame");
+  const Document = window.document.getElementsByTagName("frame");
 
-  return doc === 0 ? document : doc[1].contentDocument;
+  return Document === 0 ? document : Document[1].contentDocument;
 }
