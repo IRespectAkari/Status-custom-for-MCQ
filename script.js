@@ -19,23 +19,26 @@ function levelCustom() {
   if (getData("EXP") === undefined) {
     return;
   }
-  console.log(`ステータス画面で、50レベル以上の表示 : ${StatusOverLevelDispley}`);
-  if (StatusOverLevelDispley !== "有効") {
-    return;
-  }
 
   const exp = getValue("EXP");
 
   const newLevel = getAdvancedLevel(exp);
   const next_exp = getNextLevelExp(exp);
-  if (50 <= getValue("レベル")) {
-    const newText = getData("レベル") + EXtext_before + (newLevel - 50) + EXtext_after;
-    raplaceInnerHTML(b4, getData("レベル"), newText);
+
+  console.log(`ステータス画面で、50レベル以上の表示 : ${StatusOverLevelDispley}`);
+  if (StatusOverLevelDispley === "有効") {
+    if (50 <= getValue("レベル")) {
+      const newText = getData("レベル") + EXtext_before + (newLevel - 50) + EXtext_after;
+      raplaceInnerHTML(b4, getData("レベル"), newText);
+    }
   }
-  const newText2 = getData("EXP") + EXtext_exp_before + next_exp + EXtext_exp_after;
 
-  raplaceInnerHTML(b4, getData("EXP"), newText2);
-
+  console.log(`ステータス画面で、次のレベルまでに必要な経験値を表示 : ${nextLevelExpDisplay}`);
+  if (nextLevelExpDisplay === "有効"){
+    const newText2 = getData("EXP") + EXtext_exp_before + next_exp + EXtext_exp_after;
+  
+    raplaceInnerHTML(b4, getData("EXP"), newText2);
+}
   return;
 }
 ////////////////////////////////////////////////////////////////////
@@ -50,7 +53,7 @@ function levelCustom2() {
     return;
   }
   console.log(`ランキングで、50レベル以上の表示 : ${RankingOverLevelDispley}`);
-  if (RankingOverLevelDispley !== "有効") {
+  if (RankingOverLevelDispley === "無効") {
     return;
   }
 
@@ -79,7 +82,7 @@ function addMeter() {
   const newText = `<table style="border-spacing: 0;">
     <tbody>
       <tr>
-        <td>${coloredData("HP")}</td>
+        <td>${getData("HP")}</td>
         <td>${createMeter(getRate("HP"))}</td>
         <td style="text-align: right;">${getRate("HP")}%</td>
       </tr>
@@ -104,7 +107,7 @@ function addMeter() {
       <td style="text-align: right;">${getRate("武器")}%</td>
     </tr>
     <tr>
-      <td><img src="./img/def.png" width="16px" height="16px">${coloredData("防具")}</td>
+      <td><img src="./img/def.png" width="16px" height="16px">${getData("防具")}</td>
       <td>${createMeter(getRate("防具"))}</td>
       <td style="text-align: right;">${getRate("防具")}%</td>
     </tr>
@@ -134,6 +137,43 @@ function addMeter() {
 
   return;
 }
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td>HP：186/205</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>90%</td>
+//     </tr>
+//     <tr>
+//       <td>MP：72/72</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>100%</td>
+//     </tr>
+//   </tbody>
+// </table>
+
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
+//       <td>
+//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">36%</td>
+//     </tr>
+//     <tr>
+//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
+//       <td>
+//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">31%</td>
+//     </tr>
+//   </tbody>
+// </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
   const getReg = (key)=>{
@@ -258,10 +298,12 @@ function getRate(key) {
     case "武器":
     case "防具":
       r = (getValue(`${key}耐久`) / 2).toString().split(".")[0];
+      // return (getValue(`${key}耐久`) / 2).toString().split(".")[0];
       break;
     case "HP":
     case "MP":
       r = (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
+      // return (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
       break;
   }
   return r == 0 ? 1 : r;
