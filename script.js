@@ -6,8 +6,34 @@
 const d = getNodesByXPath("/html/frameset/frame[2]")[0];
 
 d.addEventListener("load", levelCustom);
-d.addEventListener("load", levelCustom2);
+d.addEventListener("load", rankingLevelCustom);
 d.addEventListener("load", addMeter);
+d.addEventListener("load", debugDisplay);
+////////////////////////////////////////////////////////////////////
+function debugDisplay() {
+  console.log(`debugMode : ${debugMode}`);
+  if (debugMode === "有効") {
+    const debugText1 = [
+      `+--------------------------------------+`,
+      `| ランキングで、Lv.50以上の表示 : ${RankingOverLevelDispley} |`,
+      `| ステ画面で、Lv.50以上の表示   : ${StatusOverLevelDispley} |`,
+      `| ステ画面で、必要経験値を表示  : ${nextLevelExpDisplay} |`,
+      `| HPとMPのメーター表示          : ${HP_MP_meterDisplay} |`,
+      `| HPとMPのアラート用の色変更    : ${HP_MP_Alart} |`,
+      `| 装備の耐久値のメーター表示    : ${Weapon_Armer_meterDisplay} |`,
+      `| 耐久値アラート用の色変更      : ${Weapon_Armer_Alart} |`,
+      `| アイテム数アラート用の色変更  : ${ItemAlart} |`,
+      `+--------------------------------------+`
+    ].join("\n");
+    const debugText2 = [
+      `必要経験値表示例(ランキング) : EXP:44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
+      `必要経験値表示例(ステータス) : EXP：44644${EXtext_exp2_before}1401${EXtext_exp2_after}`,
+      `超過レベル表示例(ステータス) : レベル：50${EXtext_before}15${EXtext_after}`,
+    ].join("\n");
+    console.log(debugText1);
+    console.log(debugText2);
+  }
+}
 ////////////////////////////////////////////////////////////////////
 const isIncludes = (arr,target)=>arr.some(el=>target.innerHTML.includes(el));
 ////////////////////////////////////////////////////////////////////
@@ -25,7 +51,6 @@ function levelCustom() {
   const newLevel = getAdvancedLevel(exp);
   const next_exp = getNextLevelExp(exp);
 
-  console.log(`ステータス画面で、50レベル以上の表示 : ${StatusOverLevelDispley}`);
   if (StatusOverLevelDispley === "有効") {
     if (50 <= getValue("レベル")) {
       const newText = getData("レベル") + EXtext_before + (newLevel - 50) + EXtext_after;
@@ -33,7 +58,6 @@ function levelCustom() {
     }
   }
 
-  console.log(`ステータス画面で、次のレベルまでに必要な経験値を表示 : ${nextLevelExpDisplay}`);
   if (nextLevelExpDisplay === "有効"){
     const newText2 = getData("EXP") + EXtext_exp_before + next_exp + EXtext_exp_after;
   
@@ -42,7 +66,7 @@ function levelCustom() {
   return;
 }
 ////////////////////////////////////////////////////////////////////
-function levelCustom2() {
+function rankingLevelCustom() {
   const d = getDocument().body;
   if (isIncludes(["商品情報", "預かり所"], d)) {
     return;
@@ -52,8 +76,7 @@ function levelCustom2() {
   if (!list[0]?.innerHTML.includes("EXP")) {
     return;
   }
-  console.log(`ランキングで、50レベル以上の表示 : ${RankingOverLevelDispley}`);
-  if (RankingOverLevelDispley !== "有効") {
+  if (RankingOverLevelDispley === "無効") {
     return;
   }
 
@@ -78,8 +101,8 @@ function addMeter() {
     return;
   }
 
-  const old = `${getData("HP")}<br>${getData("MP")}<br>`;
-  const newText = `<table style="border-spacing: 0;">
+  const oldHPMP = `${getData("HP")}<br>${getData("MP")}<br>`;
+  const newHPMP = `<table style="border-spacing: 0;">
     <tbody>
       <tr>
         <td>${getData("HP")}</td>
@@ -93,13 +116,12 @@ function addMeter() {
       </tr>
     </tbody>
   </table>`;
-  console.log(`HPとMPのメーターの表示 : ${HP_MP_meterDisplay}`);
   if (HP_MP_meterDisplay === "有効") {
-    raplaceInnerHTML(getDocument().body, old, newText);
+    raplaceInnerHTML(getDocument().body, oldHPMP, newHPMP);
   }
 
-  const old2 = `<img src="./img/atk.png" width="16px" height="16px">${getData("武器")}<br><img src="./img/def.png" width="16px" height="16px">${getData("防具")}<br>`;
-  const newTable = `<table style="border-spacing: 0;">
+  const oldWeaponArmer = `<img src="./img/atk.png" width="16px" height="16px">${getData("武器")}<br><img src="./img/def.png" width="16px" height="16px">${getData("防具")}<br>`;
+  const newWeaponArmer = `<table style="border-spacing: 0;">
   <tbody>
     <tr>
       <td><img src="./img/atk.png" width="16px" height="16px">${getData("武器")}</td>
@@ -113,30 +135,63 @@ function addMeter() {
     </tr>
   </tbody>
 </table>`;
-  console.log(`武器と防具の耐久値のメーターの表示 : ${Weapon_Armer_meterDisplay}`);
   if (Weapon_Armer_meterDisplay === "有効") {
-    raplaceInnerHTML(getDocument().body, old2, newTable);
+    raplaceInnerHTML(getDocument().body, oldWeaponArmer, newWeaponArmer);
   }
 
-  console.log(`HPとMPのアラート用の色変更 : ${HP_MP_Alart}`);
   if (HP_MP_Alart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("HP"), coloredData("HP"));
     raplaceInnerHTML(getDocument().body, getData("MP"), coloredData("MP"));
   }
 
-  console.log(`耐久値アラート用の色変更 : ${Weapon_Armer_Alart}`);
   if (Weapon_Armer_Alart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("武器"), coloredData("武器"));
     raplaceInnerHTML(getDocument().body, getData("防具"), coloredData("防具"));
   }
 
-  console.log(`アイテム数アラート用の色変更 : ${ItemAlart}`);
   if (ItemAlart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("アイテム"), coloredData("アイテム"));
   }
 
   return;
 }
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td>HP：186/205</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>90%</td>
+//     </tr>
+//     <tr>
+//       <td>MP：72/72</td>
+//       <td>
+//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td>100%</td>
+//     </tr>
+//   </tbody>
+// </table>
+
+// <table style="border-spacing: 0;">
+//   <tbody>
+//     <tr>
+//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
+//       <td>
+//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">36%</td>
+//     </tr>
+//     <tr>
+//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
+//       <td>
+//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
+//       </td>
+//       <td style="text-align: right;">31%</td>
+//     </tr>
+//   </tbody>
+// </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
   const getReg = (key)=>{
@@ -260,14 +315,14 @@ function getRate(key) {
   switch (key) {
     case "武器":
     case "防具":
-      r = (getValue(`${key}耐久`) / 2).toString().split(".")[0];
+      r = getValue(`${key}耐久`) / 2;
       break;
     case "HP":
     case "MP":
-      r = (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
+      r = getValue(`now_${key}`) / getValue(`max_${key}`) * 100;
       break;
   }
-  return r == 0 ? 1 : r;
+  return r === 0 ? 0 : Math.max(r.toString().split(".")[0], 1);
 }
 ////////////////////////////////////////////////////////////////////
 function coloredData(key) {
@@ -329,10 +384,6 @@ function getNextLevelExp(exp) {
 function getNodesByXPath(xpath) {
   const result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
   return [...Array(result.snapshotLength)].map((_,i)=>result.snapshotItem(i));
-}
-////////////////////////////////////////////////////////////////////
-function stop(txt) {
-  console.log(`STOP : ${txt}`);
 }
 ////////////////////////////////////////////////////////////////////
 // フレーム内documentを取得して返す
