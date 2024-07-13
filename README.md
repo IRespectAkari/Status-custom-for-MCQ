@@ -2,8 +2,8 @@
 ### ミルクチョコクエストの利便性を向上させる拡張機能
 必要経験値やHP、MPのゲージ表示、装備の耐久値が少ない時の警告用色変更など、  
 ミルクチョコクエストをする上でほんの少しだけ便利になる機能が追加されます。  
-本拡張機能は見た目だけを変更するため、チートではありません。  
 また各種設定を設定ファイルに分けており、変更も簡単です。  
+**本拡張機能は見た目だけを変更するため、チートではありません。**  
 
 ## 機能一覧
 ステータス画面で、
@@ -21,10 +21,14 @@
 
 以上の設定のオン・オフを設定ファイルで書き換えて設定可能。  
 
-## 機能解説
-### 50レベル超のレベル表示、必要経験値、HPとMPの％表記、HPとMPのメーター の追加
-<img src="./images/hpmpPercentAndMeter.png" alt="hpmpPercentAndMeter" title="hpmpPercentAndMeter">
-現在のHPとMPの隣に、それぞれの％表記とメーターを追加する。
+## 機能の詳細解説
+### 50超レベル、必要経験値、HP・MP・耐久値の％表記・メーター・色変更 の追加
+<div style="display: flex;">
+<img src="./images/hpmpDurablePercentAndMeter1.png" alt="hpmpDurablePercentAndMeter1" title="hpmpDurablePercentAndMeter1">
+<img src="./images/hpmpDurablePercentAndMeter2.png" alt="hpmpDurablePercentAndMeter2" title="hpmpDurablePercentAndMeter2">
+</div>
+現在のHP・MP・耐久値の隣に、それぞれの％表記とメーターを追加する。
+現在のHP・MP・耐久値が50％、20％を切った時に色を変更する。
 経験値の隣に、次のレベルに上がるのに必要経験値を追加する。
 レベルの隣に、同じ計算式でレベルアップした場合のレベルから50を引いた値を追加。
 
