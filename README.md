@@ -47,7 +47,7 @@
 必要経験値と50レベル以上の表示方法は、ある程度自由に書き換えられる。
 
 ### 設定ファイルでオン・オフを変更できる
-<img src="./images/option.png" alt="option" title="option">
+<img src="./images/option2.png" alt="option2" title="option2">
 「有効」と書くとオンに、「有効」以外が書かれている場合はオフになります。
 
 ### デバッグモードで現在の設定を確認可能
