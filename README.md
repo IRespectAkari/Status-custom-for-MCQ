@@ -1,4 +1,4 @@
-# Status_custom_for_MCQ v2.2
+# Status_custom_for_MCQ v2.3
 ### ミルクチョコクエストの利便性を向上させる拡張機能
 必要経験値やHP、MPのゲージ表示、装備の耐久値が少ない時の警告用色変更など、  
 ミルクチョコクエストをする上でほんの少しだけ便利になる機能が追加されます。  
@@ -14,6 +14,7 @@
 - 装備の隣に耐久値の％表記とメーターを追加。
 - 装備の耐久値が50％、20％を切った時に色を変更。
 - アイテム数が(最大数 - 1)の時と最大数の時に色を変更。
+- タウン名の隣に周年記念日までのカウントダウンを追加。
 
 その他
 - ランキング画面に次のレベルに上がる為に必要な経験値を表示。
@@ -23,15 +24,16 @@
 以上の設定のオン・オフを設定ファイルで書き換えて設定可能。  
 
 ## 機能の詳細解説
-### 50超レベル、必要経験値、HP・MP・耐久値の％表記・メーター・色変更 の追加
+### 50超レベル、必要経験値、HP・MP・耐久値の％表記・メーター・色変更、カウントダウン の追加
 <div style="display: flex;">
-<img src="./images/hpmpDurablePercentAndMeter1.png" alt="hpmpDurablePercentAndMeter1" title="hpmpDurablePercentAndMeter1">
+<img src="./images/hpmpDurablePercentAndMeter3.png" alt="hpmpDurablePercentAndMeter3" title="hpmpDurablePercentAndMeter3">
 <img src="./images/hpmpDurablePercentAndMeter2.png" alt="hpmpDurablePercentAndMeter2" title="hpmpDurablePercentAndMeter2">
 </div>
 現在のHP・MP・耐久値の隣に、それぞれの％表記とメーターを追加する。  
 現在のHP・MP・耐久値が50％、20％を切った時に色を変更する。  
 経験値の隣に、次のレベルに上がるのに必要経験値を追加する。  
 レベルの隣に、同じ計算式でレベルアップした場合のレベルから50を引いた値を追加。  
+タウン名の隣に、周年記念日までのカウントダウン（毎秒更新）を追加。
 
 ### 必要経験値の表示（ランキング）
 <img src="./images/need_exp_ranking.png" alt="need_exp_ranking" title="need_exp_ranking">
