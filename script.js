@@ -20,7 +20,7 @@ function levelCustom() {
     return;
   }
   console.log(`ステータス画面で、50レベル以上の表示 : ${StatusOverLevelDispley}`);
-  if (StatusOverLevelDispley === "無効") {
+  if (StatusOverLevelDispley !== "有効") {
     return;
   }
 
@@ -50,7 +50,7 @@ function levelCustom2() {
     return;
   }
   console.log(`ランキングで、50レベル以上の表示 : ${RankingOverLevelDispley}`);
-  if (RankingOverLevelDispley === "無効") {
+  if (RankingOverLevelDispley !== "有効") {
     return;
   }
 
@@ -115,28 +115,18 @@ function addMeter() {
     raplaceInnerHTML(getDocument().body, old2, newTable);
   }
 
-  // const old3 = getData("HP");
-  // const old4 = getData("MP");
-  // const newItemText = coloredData("HP");
-  // const newItemText = coloredData("MP");
   console.log(`HPとMPのアラート用の色変更 : ${HP_MP_Alart}`);
   if (HP_MP_Alart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("HP"), coloredData("HP"));
     raplaceInnerHTML(getDocument().body, getData("MP"), coloredData("MP"));
   }
 
-  // const old5 = getData("武器");
-  // const old6 = getData("防具");
-  // const newItemText = coloredData("武器");
-  // const newItemText = coloredData("防具");
   console.log(`耐久値アラート用の色変更 : ${Weapon_Armer_Alart}`);
   if (Weapon_Armer_Alart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("武器"), coloredData("武器"));
     raplaceInnerHTML(getDocument().body, getData("防具"), coloredData("防具"));
   }
 
-  // const old7 = getData("アイテム");
-  // const newItemText = `アイテム${coloredData("アイテム")}`;
   console.log(`アイテム数アラート用の色変更 : ${ItemAlart}`);
   if (ItemAlart === "有効") {
     raplaceInnerHTML(getDocument().body, getData("アイテム"), coloredData("アイテム"));
@@ -144,43 +134,6 @@ function addMeter() {
 
   return;
 }
-// <table style="border-spacing: 0;">
-//   <tbody>
-//     <tr>
-//       <td>HP：186/205</td>
-//       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td>90%</td>
-//     </tr>
-//     <tr>
-//       <td>MP：72/72</td>
-//       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td>100%</td>
-//     </tr>
-//   </tbody>
-// </table>
-
-// <table style="border-spacing: 0;">
-//   <tbody>
-//     <tr>
-//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
-//       <td>
-//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">36%</td>
-//     </tr>
-//     <tr>
-//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
-//       <td>
-//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">31%</td>
-//     </tr>
-//   </tbody>
-// </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
   const getReg = (key)=>{
@@ -305,12 +258,10 @@ function getRate(key) {
     case "武器":
     case "防具":
       r = (getValue(`${key}耐久`) / 2).toString().split(".")[0];
-      // return (getValue(`${key}耐久`) / 2).toString().split(".")[0];
       break;
     case "HP":
     case "MP":
       r = (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
-      // return (getValue(`now_${key}`) / getValue(`max_${key}`) * 100).toString().split(".")[0];
       break;
   }
   return r == 0 ? 1 : r;
