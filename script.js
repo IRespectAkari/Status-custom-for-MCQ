@@ -76,7 +76,7 @@ function rankingLevelCustom() {
   if (!list[0]?.innerHTML.includes("EXP")) {
     return;
   }
-  if (RankingOverLevelDispley === "無効") {
+  if (RankingOverLevelDispley !== "有効") {
     return;
   }
 
@@ -155,43 +155,6 @@ function addMeter() {
 
   return;
 }
-// <table style="border-spacing: 0;">
-//   <tbody>
-//     <tr>
-//       <td>HP：186/205</td>
-//       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td>90%</td>
-//     </tr>
-//     <tr>
-//       <td>MP：72/72</td>
-//       <td>
-//         <meter value="1" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td>100%</td>
-//     </tr>
-//   </tbody>
-// </table>
-
-// <table style="border-spacing: 0;">
-//   <tbody>
-//     <tr>
-//       <td><img src="./img/atk.png" width="16px" height="16px">武器：マサムネ+13(20/78)</td>
-//       <td>
-//         <meter value="0.36" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">36%</td>
-//     </tr>
-//     <tr>
-//       <td><img src="./img/def.png" width="16px" height="16px">防具：ホウオウ+13(20/62)</td>
-//       <td>
-//         <meter value="0.31" low="0.21" high="0.51" optimum="1"></meter>
-//       </td>
-//       <td style="text-align: right;">31%</td>
-//     </tr>
-//   </tbody>
-// </table>
 ////////////////////////////////////////////////////////////////////
 function getData(key) {
   const getReg = (key)=>{
