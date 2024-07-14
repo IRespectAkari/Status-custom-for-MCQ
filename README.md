@@ -67,10 +67,10 @@ bbsボタンの隣に、周年記念日までのカウントダウン（毎秒�
 隠しボスがいる場所に挑戦する時、必要なアイテムを持っていると、画像のように表示して教えてくれます。<br>
 
 ### 設定ファイルでオン・オフを変更できる
-<img src="./images/option2.png" alt="option2" title="option2">
+<img src="./images/option3.png" alt="option3" title="option3">
 「有効」と書くとオンに、「有効」以外が書かれている場合はオフになります。
 
 ### デバッグモードで現在の設定を確認可能
-<img src="./images/debug.png" alt="debug" title="debug">
+<img src="./images/debug2.png" alt="debug2" title="debug2">
 Ctrl+Shift+Iの同時押しで表示されるデベロッパーツールを使用して、現在の設定を確認できる。<br>
 表示されたデベロッパーツール上部の「コンソール」をクリックすると、画像のように現在の設定が表示される。
