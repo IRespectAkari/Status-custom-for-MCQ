@@ -57,7 +57,7 @@
 必要経験値と50レベル以上の表示方法は、ある程度自由に書き換えられる。
 
 ### ミチクエのホーム画面の「bbs」の隣に、カウントダウンの追加
-<img src="./images/text_custom1.png" alt="text_custom" title="text_custom">
+<img src="./images/countdown_home.png" alt="countdown_home" title="countdown_home">
 bbsボタンの隣に、周年記念日までのカウントダウン（毎秒更新）を追加。<br>
 カウントダウンは、0になると自動で次の周年記念日までのカウントダウンに更新されます。<br>
 
